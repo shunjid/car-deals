@@ -1,10 +1,37 @@
 .brand-logo {
-    font-family: 'Google Sans';
-    margin-left: 2rem;
+  font-family: "Google Sans";
+  margin-left: 2rem;
 }
 
 @media only screen and (max-width: 600px) {
-    .brand-logo {
-        margin-left: 0rem;
-    }    
+  .brand-logo {
+    margin-left: 0rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .card-image {
+    height: 250px;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  #loader {
+    position: absolute;
+    bottom: 70%;
+    right: 50%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #loader {
+    position: absolute;
+    bottom: 70%;
+    right: 45%;
+  }
+}
+
+#actionButton {
+    visibility: hidden;
 }
