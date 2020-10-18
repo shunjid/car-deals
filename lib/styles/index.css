@@ -1,0 +1,10 @@
+.brand-logo {
+    font-family: 'Google Sans';
+    margin-left: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .brand-logo {
+        margin-left: 0rem;
+    }    
+}
