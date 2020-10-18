@@ -63,7 +63,7 @@
 
     <script id="car-card" type="text/template">
         <div class="col s12 l4">
-          <div class="card hoverable z-depth-2">
+          <div class="card hoverable z-depth-2 pointerCard" onclick="pageEvents.loadCarPage('{{details-id}}');">
             <div class="card-image">
               <img src="{{image}}">
               <span class="card-title">{{title}}</span>
@@ -74,6 +74,9 @@
           </div>
         </div>
       </div>
+    </script>
+    <script id="mdl" type="text/template">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     </script>
 </body>
 

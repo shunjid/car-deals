@@ -35,3 +35,7 @@
 #actionButton {
     visibility: hidden;
 }
+
+.pointerCard {
+    cursor: pointer;
+}
