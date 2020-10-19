@@ -1,19 +1,23 @@
 export function storage() {
-    'use strict';
+    "use strict";
 
     let carInstance = localforage.createInstance({
-        name: "cars"
+        name: "cars",
     });
+    let lastItemId = {
+        value: null,
+    };
 
     return {
         add: (cars) => addCars(cars, carInstance),
-        get: () => getCars(carInstance)
-    }
+        get: () => getCars(carInstance, lastItemId),
+        getLastCarId: () => lastItemId.value,
+    };
 }
 
 const addCars = function (cars, carInstance) {
     return new Promise((resolve, reject) => {
-        cars.forEach(eachCar => {
+        cars.forEach((eachCar) => {
             carInstance.setItem(eachCar.key.toString(), eachCar.value).then(() => {
                 resolve();
             });
@@ -21,44 +25,39 @@ const addCars = function (cars, carInstance) {
     });
 };
 
-const getCars = function (carInstance) {
+const getCars = function (carInstance, lastItemId) {
     const limit = 3;
-    let lastItemId = null;
 
     return new Promise((resolve, reject) => {
-        carInstance.keys().then((keys) => {
-            let index = keys.indexOf(lastItemId);
-            if(index == -1) index = keys.length;
-            if(index == 0) {
-                resolve([]);
+        carInstance.keys().then((allKeys) => {
+            let startAt = 0;
+            let endAt = allKeys.length;
+
+            if (lastItemId.value === null) startAt = 0;
+            else {
+                console.log(allKeys);
+                console.log(`finding: ${lastItemId.value}`);
+                startAt = allKeys.indexOf(lastItemId.value.toString());
             }
 
-            let splicedKeys = keys.splice(index - limit, limit);
-            let obj = {};
-
-            getLocalForageData(carInstance)
-            .then(function (values) {
-                resolve(values);
-            })
-
-            // splicedKeys.forEach((eachKey) => {
-            //     obj[eachKey] = carInstance.getItem(eachKey);
-            // });
-
-            // let returnArr = Object.keys(obj).map(function (k) {
-            //     return obj[k.toString()];
-            // }).reverse();
-
-            // lastItemId = returnArr[returnArr.length - 1].id.toString();
-            // resolve(returnArr);
+            getLocalForageData(carInstance).then(function (values) {
+                let result = values.reverse();
+                console.log(`Start: ${startAt} End: ${endAt}`);
+                result = result.slice(startAt, endAt);
+                console.log(result);
+                lastItemId.value = values[values.length - 1].id;
+                resolve(result);
+            });
         });
     });
-}
+};
 
-const getLocalForageData = function(carInstance) {
+const getLocalForageData = function (carInstance) {
     return carInstance.keys().then(function (keys) {
-        return Promise.all(keys.map(function (key) {
-            return carInstance.getItem(key);
-        }))
+        return Promise.all(
+            keys.map(function (key, index) {
+                return carInstance.getItem(key);
+            })
+        );
     });
-}
+};

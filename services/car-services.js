@@ -19,7 +19,8 @@ const loadCarPage = function(carId, apiUrlCar, materialDesignLite) {
 }
 
 const loadMoreRequest = function (apiUrlLatest, cardBuilderTemplate, clientSideStorage) {
-    fetch(apiUrlLatest).then((response) => {
+    fetch(apiUrlLatest + "?carId=" + clientSideStorage.getLastCarId()).then((response) => {
+        console.log(apiUrlLatest + "?carId=" + clientSideStorage.getLastCarId());
         return response.json();
     }).then(function (data) {
         clientSideStorage.add(data.cars).then(() => {

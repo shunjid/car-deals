@@ -24,5 +24,12 @@ window.pageEvents = {
             url: apiUrlCar,
             css: materialDesignLite
         });
+    },
+    loadMore: () => {
+        carServices.loadMoreRequest({
+            url: apiUrlLatest,
+            builder: cardBuilderTemplate,
+            store: browserStorage
+        })
     }
 }
