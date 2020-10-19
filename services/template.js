@@ -1,4 +1,4 @@
-export function template() {
+export const template = () => {
     return {
         append : (cars) => appendCars(cars)
     };

@@ -1,4 +1,4 @@
-export function storage() {
+export const storage = () => {
     "use strict";
 
     let carInstance = localforage.createInstance({
