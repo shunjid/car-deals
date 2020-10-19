@@ -2,7 +2,7 @@ export function service() {
     'use strict';
     
     return {
-        loadMoreRequest: ({url, builder}) => loadMoreRequest(url, builder),
+        loadMoreRequest: ({url, builder, store}) => loadMoreRequest(url, builder, store),
         loadCar: ({id, url, css}) => loadCarPage(id, url, css)
     }
 }
@@ -18,10 +18,12 @@ const loadCarPage = function(carId, apiUrlCar, materialDesignLite) {
     });
 }
 
-const loadMoreRequest = function (apiUrlLatest, cardBuilderTemplate) {
+const loadMoreRequest = function (apiUrlLatest, cardBuilderTemplate, clientSideStorage) {
     fetch(apiUrlLatest).then((response) => {
         return response.json();
     }).then(function (data) {
-        cardBuilderTemplate.append(data.cars);
+        clientSideStorage.add(data.cars).then(() => {
+            cardBuilderTemplate.append(data.cars);
+        });
     });
 }
