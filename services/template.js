@@ -8,7 +8,7 @@ const appendCars = function (cars) {
     let cardHtml = "";
 
     cars.forEach(eachCar => {
-        cardHtml = cardHtml.concat(generateCard(eachCar.value));
+        cardHtml = cardHtml.concat(generateCard(eachCar));
     });
 
     document.getElementById('loader').hidden = true;

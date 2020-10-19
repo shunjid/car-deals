@@ -23,7 +23,13 @@ const loadMoreRequest = function (apiUrlLatest, cardBuilderTemplate, clientSideS
         return response.json();
     }).then(function (data) {
         clientSideStorage.add(data.cars).then(() => {
-            cardBuilderTemplate.append(data.cars);
+            loadMore(clientSideStorage, cardBuilderTemplate);           
         });
+    });
+}
+
+const loadMore = function (clientSideStorage, cardBuilderTemplate) {
+    clientSideStorage.get().then((cars) => {
+        cardBuilderTemplate.append(cars);  
     });
 }
